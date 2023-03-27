@@ -1,0 +1,61 @@
+
+
+UI = data + style + behavior
+Web UI = HTML + CSS + ( browser APIs + JavaScript)
+
+
+-----------------------------------------------------
+problems / limitations / challenges while working
+with browser Apis with plain JavaScript
+-----------------------------------------------------
+
+==> browser compatability issues
+==> memory issues
+==> performance issues
+==> code oraganization/re-use issues
+
+-----------------------------------------------------
+legacy solutions
+
+=> server-side page technology
+
+    -> jsp,asp,php..
+
+    limitations:
+
+    -> on every request, server-side re-construct same page keeping client's state
+    -> on every response, browser re-loads whole page
+    -> on every response, serving same static resources, n/w bandwidth
+
+-----------------------------------------------------
+Modern Solutions:
+-----------------------------------------------------
+
+=> using third-party's JavaScript lib / frameworks
+
+
+1. Jquery
+
+
+MVC ( Model View Controller) Arch pattern
+
+2. Backbone.js
+3. Knockout.js
+4. Ember.js
+5. Dojo
+6. Ext.JS from sencha
+7. Angular.js from google-team
+....
+
+
+component based UI
+
+1. React.js from facebook
+2. Angular from google-team ( our focus )
+3. Vue.js
+3. Ember.js 
+..
+
+
+-----------------------------------------------------
+
