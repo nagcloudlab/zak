@@ -3,7 +3,6 @@
 UI = data + style + behavior
 Web UI = HTML + CSS + ( browser APIs + JavaScript)
 
-
 -----------------------------------------------------
 problems / limitations / challenges while working
 with browser Apis with plain JavaScript
@@ -16,7 +15,7 @@ with browser Apis with plain JavaScript
 
 -----------------------------------------------------
 legacy solutions
-
+-----------------------------------------------------
 => server-side page technology
 
     -> jsp,asp,php..
@@ -47,7 +46,6 @@ MVC ( Model View Controller) Arch pattern
 7. Angular.js from google-team
 ....
 
-
 component based UI
 
 1. React.js from facebook
@@ -59,3 +57,34 @@ component based UI
 
 -----------------------------------------------------
 
+- HTML
+- CSS
+- CSS pre-processors 
+- JavaScript / Typescript
+- npm, yarn => package manager
+- Webpack => Module bundler & loader
+
+-----------------------------------------------------
+Angular cli
+-----------------------------------------------------
+
+
+> sudo npm i @angular/cli -g
+
+
+-----------------------------------------------------
+Angular project structure
+-----------------------------------------------------
+
+
+- Module(s)
+
+    1. directive(s)
+    2. pipe(s)
+    3. service(s)
+
+
+
+-----------------------------------------------------
+component => html + css + .ts
+-----------------------------------------------------
