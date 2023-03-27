@@ -88,3 +88,26 @@ Angular project structure
 -----------------------------------------------------
 component => html + css + .ts
 -----------------------------------------------------
+
+
+
+Angular core concepts
+----------------------
+
+
+
+A. directives
+
+    1. component
+    2. structural
+    2. attribute/property
+
+B. data-binding
+
+    1. interpolation:
+        {{expresion}}
+    2. property
+        <element prop1="staic-value" [prop2]="expr"/>  
+    3. event         
+        <element (event-name)="eventHandler($event)"/>   
+
