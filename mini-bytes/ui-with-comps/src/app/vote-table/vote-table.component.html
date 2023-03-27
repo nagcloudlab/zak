@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Likes</th>
+                    <th>Dislikes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let vote of votes">
+                    <td>{{vote.name}}</td>
+                    <td>{{vote.voteLine.up}}</td>
+                    <td>{{vote.voteLine.down}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
