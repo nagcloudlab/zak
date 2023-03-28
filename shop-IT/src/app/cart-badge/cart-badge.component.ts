@@ -13,8 +13,10 @@ export class CartBadgeComponent {
 
   constructor(private cartService: CartService) { }
 
-  ngOnChanges() {
-    this.value = this.cartService.getCart().length
+  ngOnInit() {
+    this.cartService.getCartStream().subscribe(cart => {
+      this.value = cart.length;
+    });
   }
 
 }
