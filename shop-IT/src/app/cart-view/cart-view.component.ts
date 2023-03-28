@@ -1,4 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-cart-view',
@@ -7,10 +8,10 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 })
 export class CartViewComponent {
 
-  @Input("value")
+  // @Input("value")
   cart: Array<any> = [];
 
-  constructor() {
+  constructor(private cartService: CartService) {
     console.log("CartViewComponent :: constructor");
     // to-do any one-time intialization code goes here
   }
@@ -26,6 +27,7 @@ export class CartViewComponent {
   ngOnInit() {
     console.log("CartViewComponent :: ngOnInit");
     // to-do any one time initialization code goes here
+    this.cart = this.cartService.getCart();
   }
 
   ngOnDestroy() {

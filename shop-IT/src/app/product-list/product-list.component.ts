@@ -30,12 +30,12 @@ export class ProductListComponent {
     },
   ]
 
-  @Output()
-  buy: EventEmitter<any> = new EventEmitter<any>();
+  // @Output()
+  // buy: EventEmitter<any> = new EventEmitter<any>();
 
-  handleBuy(product: any) {
-    this.buy.emit(product);
-  }
+  // handleBuy(product: any) {
+  //   this.buy.emit(product);
+  // }
 
 
 }

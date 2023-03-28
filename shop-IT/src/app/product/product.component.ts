@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-product',
@@ -10,8 +11,10 @@ export class ProductComponent {
   @Input("value")
   product: any = {}
 
-  @Output()
-  buy: EventEmitter<any> = new EventEmitter<any>();
+  // @Output()
+  // buy: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(private cartService: CartService) { }
 
   currentTab: number = 1
 
@@ -24,7 +27,8 @@ export class ProductComponent {
     this.currentTab = tabIndex
   }
   handleBuy() {
-    this.buy.emit(this.product)
+    // this.buy.emit(this.product)
+    this.cartService.addToCart(this.product)
   }
   isTabSelected(tabIndex: number) {
     return this.currentTab === tabIndex
