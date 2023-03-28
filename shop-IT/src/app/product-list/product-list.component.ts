@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-product-list',
@@ -21,10 +21,17 @@ export class ProductListComponent {
       name: 'Mobile',
       price: 47000,
       description: 'Iphone pro',
-      isAvailable: false,
+      isAvailable: true,
       imgPath: 'assets/Mobile.png'
     },
   ]
+
+  @Output()
+  buy: EventEmitter<any> = new EventEmitter<any>();
+
+  handleBuy(product: any) {
+    this.buy.emit(product);
+  }
 
 
 }

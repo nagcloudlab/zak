@@ -17,11 +17,11 @@ export class VoteItemComponent {
 
   handleUpVote(event: Event, n: number) {
     this.voteLine.up += n;
-    this.vote.emit({ name: this.value, voteLine: this.voteLine });
+    this.vote.emit({ voteLine: { name: this.value, ...this.voteLine } });
   }
   handleDownVote(event: Event, n: number) {
     this.voteLine.down += n;
-    this.vote.emit({ name: this.value, voteLine: this.voteLine });
+    this.vote.emit({ voteLine: { name: this.value, ...this.voteLine } });
   }
 
 }

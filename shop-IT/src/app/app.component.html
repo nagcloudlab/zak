@@ -1,4 +1,15 @@
 <div class="container">
   <app-header value="shop-IT"></app-header>
-  <app-product-list></app-product-list>
+  <app-cart-badge [value]="cart.length"></app-cart-badge>
+  <button (click)="togglecartView()" class="btn btn-danger">{{isCartOpen?'Products':"Cart"}}</button>
+  <hr />
+
+  <app-zak-card *ngIf="isCartOpen">
+    <div class="h" #h>Item(s) in cart</div>
+    <div class="b" #b>
+      <app-cart-view [value]="cart"></app-cart-view>
+    </div>
+  </app-zak-card>
+
+  <app-product-list (buy)="addToCart($event)" *ngIf="!isCartOpen"></app-product-list>
 </div>

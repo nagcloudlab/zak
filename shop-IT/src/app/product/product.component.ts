@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-product',
@@ -10,6 +10,9 @@ export class ProductComponent {
   @Input("value")
   product: any = {}
 
+  @Output()
+  buy: EventEmitter<any> = new EventEmitter<any>();
+
   currentTab: number = 1
 
   reviews: Array<any> = [
@@ -19,6 +22,9 @@ export class ProductComponent {
 
   handleTabChange(event: Event, tabIndex: number) {
     this.currentTab = tabIndex
+  }
+  handleBuy() {
+    this.buy.emit(this.product)
   }
   isTabSelected(tabIndex: number) {
     return this.currentTab === tabIndex

@@ -9,10 +9,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let vote of votes">
-                    <td>{{vote.name}}</td>
-                    <td>{{vote.voteLine.up}}</td>
-                    <td>{{vote.voteLine.down}}</td>
+                <tr *ngFor="let voteLine of voteLines">
+                    <td>{{voteLine.name}}</td>
+                    <td>{{voteLine.up}}</td>
+                    <td>{{voteLine.down}}</td>
                 </tr>
             </tbody>
         </table>

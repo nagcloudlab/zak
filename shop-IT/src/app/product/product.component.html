@@ -5,7 +5,7 @@
     <div class="col-8">
         <div [innerText]="product.name"></div>
         <div>{{product.price}}</div>
-        <button [disabled]="!product.isAvailable" class="btn btn-sm btn-dark">Buy</button>
+        <button [disabled]="!product.isAvailable" (click)="handleBuy()" class="btn btn-sm btn-dark">Buy</button>
 
         <ul class="nav nav-tabs">
             <li class="nav-item">

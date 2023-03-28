@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
 export class VoteTableComponent {
 
   @Input("value")
-  votes: Array<any> = []
+  voteLines: Array<any> = []
 
 }

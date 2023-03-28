@@ -9,8 +9,8 @@ export class VoteBoxComponent {
 
   voteLines: Array<any> = []
 
-  handleVote(vote: any) {
-    let { name, voteLine } = vote
+  handleVote(voteLine: any) {
+    let { name } = voteLine
     let existingVoteLine = this.voteLines.find(v => v.name === name)
     if (!existingVoteLine) {
       this.voteLines.push({ name, voteLine })
