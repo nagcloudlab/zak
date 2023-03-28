@@ -12,17 +12,21 @@ export class ProductListComponent {
       id: 1,
       name: 'Laptop',
       price: 150000,
+      currencyCode: 'INR',
       description: 'Mac pro',
       isAvailable: true,
-      imgPath: 'assets/Laptop.png'
+      imgPath: 'assets/Laptop.png',
+      makeDate: Date.now()
     },
     {
       id: 2,
       name: 'Mobile',
       price: 47000,
+      currencyCode: 'INR',
       description: 'Iphone pro',
       isAvailable: true,
-      imgPath: 'assets/Mobile.png'
+      imgPath: 'assets/Mobile.png',
+      makeDate: Date.now()
     },
   ]
 
