@@ -9,7 +9,7 @@
         <div [innerText]="product.name | uppercase"></div>
         <div>{{product.makeDate|date:'yyyy'}}</div>
         <div>{{product.price | discount | currency:product.currencyCode:'symbol'}}</div>
-        <button [disabled]="!product.isAvailable" (click)="handleBuy()" class="btn btn-sm btn-dark">Buy</button>
+        <button [disabled]="!product.available" (click)="handleBuy()" class="btn btn-sm btn-dark">Buy</button>
 
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -29,6 +29,7 @@
         <div *ngIf="isTabSelected(2)">Not yet</div>
         <div *ngIf="isTabSelected(3)">
             <app-review *ngFor="let rev of reviews" [value]="rev"></app-review>
+            <app-review-form (submit)="handleNewReview($event)"></app-review-form>
         </div>
     </div>
 </div>

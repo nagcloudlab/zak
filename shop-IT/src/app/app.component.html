@@ -1,15 +1,22 @@
 <div class="container">
   <app-header value="shop-IT"></app-header>
   <app-cart-badge></app-cart-badge>
-  <button (click)="togglecartView()" class="btn btn-danger">{{isCartOpen?'Products':"Cart"}}</button>
+
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/products']">Products</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/cart']">Cart</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/orders']">Orders</a>
+    </li>
+  </ul>
   <hr />
+  <router-outlet></router-outlet>
 
-  <app-zak-card *ngIf="isCartOpen">
-    <div class="h" #h>Item(s) in cart</div>
-    <div class="b" #b>
-      <app-cart-view></app-cart-view>
-    </div>
-  </app-zak-card>
-
-  <app-product-list *ngIf="!isCartOpen"></app-product-list>
 </div>

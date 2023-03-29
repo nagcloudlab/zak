@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CartService } from '../cart.service';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product',
@@ -14,18 +15,34 @@ export class ProductComponent {
   // @Output()
   // buy: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private productService: ProductService) { }
 
   currentTab: number = 1
 
-  reviews: Array<any> = [
-    { stars: 1, body: 'sample-review-1', author: 'who-1' },
-    { stars: 3, body: 'sample-review-2', author: 'who-2' },
-  ]
+  reviews: Array<any> = []
 
   handleTabChange(event: Event, tabIndex: number) {
+    event.preventDefault();
     this.currentTab = tabIndex
+    if (this.currentTab === 3) {
+      this.productService.getReviews(this.product.id)
+        .subscribe({
+          next: (reviews: any) => {
+            this.reviews = reviews
+          }
+        })
+    }
   }
+
+  handleNewReview(newReview: any) {
+    this.productService.postNewReview(this.product.id, newReview)
+      .subscribe({
+        next: (review: any) => {
+          this.reviews.push(review)
+        }
+      })
+  }
+
   handleBuy() {
     // this.buy.emit(this.product)
     this.cartService.addToCart(this.product)
