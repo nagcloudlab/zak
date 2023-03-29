@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, Subject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,10 @@ export class ProductService {
 
   getProducts() {
     // XHR | Fetch
-    return this.httpClient.get("http://localhost:8080/api/products")
+    //return this.httpClient.get("http://localhost:8080/api/products")
+    return of([
+
+    ])
   }
 
   getReviews(productId: number) {

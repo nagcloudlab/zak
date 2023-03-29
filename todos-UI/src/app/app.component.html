@@ -1,0 +1,35 @@
+<section class="todoapp">
+  <header class="header">
+    <h1>{{title}}</h1>
+    <input (keyup)="handleKeyup($event)" class="new-todo" placeholder="What needs to be done?" autofocus>
+  </header>
+  <section class="main">
+    <input id="toggle-all" class="toggle-all" type="checkbox" (click)="handleCompleteAll()">
+    <label for="toggle-all">Mark all as complete</label>
+    <ul class="todo-list">
+      <li *ngFor="let todo of filteredTodos" [ngClass]="{completed:todo.completed}">
+        <div class="view">
+          <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="handleComplete(todo.id)">
+          <label>{{todo.title}}</label>
+          <button class="destroy" (click)="handleDelete(todo.id)"></button>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <footer class="footer">
+    <span class="todo-count">{{activeTodosCount}}</span>
+    <ul class="filters">
+      <li>
+        <a href="#/" [class.selected]="currentFilter==='ALL'" (click)="handleFilterChange('ALL')">All</a>
+      </li>
+      <li>
+        <a href="#/active" [class.selected]="currentFilter==='ACTIVE'" (click)="handleFilterChange('ACTIVE')">Active</a>
+      </li>
+      <li>
+        <a href="#/completed" [class.selected]="currentFilter==='COMPLETED'"
+          (click)="handleFilterChange('COMPLETED')">Completed</a>
+      </li>
+    </ul>
+    <button class="clear-completed" (click)="handleClearCompleted()">Clear completed</button>
+  </footer>
+</section>
