@@ -132,6 +132,8 @@ Angular ( Level-2 )
 
         - component communication
 
-            a. input / output
+            a. input & output
             b. services
+
+            
             
