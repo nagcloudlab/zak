@@ -134,6 +134,21 @@ Angular ( Level-2 )
 
             a. input & output
             b. services
+            c. using setter for intercepting input property changes
 
+   2. attribute & structural         
+
+-----------------------------------------------------
+
+- router module
+- http Module
+- forms module
+- mocro-frontend-framework
+- zone.js & change dtection 
+- ngRx
+- security
+- PWA
+- unit Testing & debugging
+-----------------------------------------------------
             
             
