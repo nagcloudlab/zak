@@ -120,3 +120,18 @@ B. data-binding
   <div>
     content - text / markup
   </div>
+
+
+-----------------------------------------------------
+Angular ( Level-2 )
+-----------------------------------------------------
+
+1. directives
+
+    1. component
+
+        - component communication
+
+            a. input / output
+            b. services
+            
