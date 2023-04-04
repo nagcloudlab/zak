@@ -1,0 +1,190 @@
+
+
+ import { catchError} from 'rxjs/operators';
+//stream$ is the source Observable that might error out
+stream$.pipe(
+      catchError(error => {
+          //handle the error received
+      })
+    ).subscribe()
+  }
+
+----------------------------------------------------------------
+
+When it comes to handling errors, there are three strategies:
+
+A replace strategy
+A rethrow strategy
+A retry strategy
+
+----------------------------------------------------------------
+A replace strategy
+----------------------------------------------------------------
+
+import { from, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+const stream$ = from(['5', '10', '6', 'Hello', '2']);
+stream$
+  .pipe(
+    map((value) => {
+      if (isNaN(value as any)) {
+        throw new Error('This is not a number');
+      }
+      return parseInt(value);
+    }),
+    catchError((error) => {
+      console.log('Caught Error', error);
+      return of();
+    })
+  )
+  .subscribe({
+    next: (res) => console.log('Value Emitted', res),
+    error: (err) => console.log('Error Occurred', err),
+    complete: () => console.log('Stream Completed'),
+  });
+//output
+Value Emitted 5
+Value Emitted 10
+Value Emitted 6
+Caught Error Error: This is not a number
+Stream Completed
+
+
+----------------------------------------------------------------
+A rethrow strategy
+----------------------------------------------------------------
+
+import { from, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+const stream$ = from(['5', '10', '6', 'Hello', '2']);
+stream$
+  .pipe(
+    map((value) => {
+      if (isNaN(value as any)) {
+        throw new Error('This is not a number');
+      }
+      return parseInt(value);
+    }),
+    catchError((error) => {
+      console.log('Caught Error', error);
+      return throwError(() => error);
+    })
+  )
+  .subscribe({
+    next: (res) => console.log('Value Emitted', res),
+    error: (err) => console.log('Error Occurred', err),
+    complete: () => console.log('Stream Completed'),
+  });
+//output
+Value Emitted 5
+Value Emitted 10
+Value Emitted 6
+Caught Error Error: This is not a number
+Error Occurred Error: This is not a number
+
+
+
+
+----------------------------------------------------------------
+A retrying strategy
+----------------------------------------------------------------
+
+import { catchError, map, retry } from 'rxjs/operators';
+import { from, throwError } from 'rxjs';
+const stream$ = from(['5', '10', '6', 'Hello', '2']);
+stream$
+  .pipe(
+    map((value) => {
+      if (isNaN(value as any)) {
+        throw new Error('This is not a number');
+      }
+      return parseInt(value);
+    }),
+    retry(2),
+    catchError((error) => {
+      console.log('Caught Error', error);
+      return throwError(() => error);
+    })
+  )
+  .subscribe({
+    next: (res) => console.log('Value Emitted', res),
+    error: (err) => console.log('Error Occurred', err),
+    complete: () => console.log('Stream Completed'),
+  });
+//output
+Value Emitted 5
+10
+6
+5
+10
+6
+5
+10
+6
+Caught Error Error: This is not a number
+Error Occurred Error: This is not a number
+
+
+----------------------------------------------------------------
+The retryWhen operator
+----------------------------------------------------------------
+
+import { from} from 'rxjs';
+import { map, retryWhen, tap } from 'rxjs/operators';
+const stream$ = from(['5', '10', '6', 'Hello', '2']);
+stream$
+  .pipe(
+    map((value) => {
+      if (isNaN(value as any)) {
+        throw new Error('This is not a number');
+      }
+      return parseInt(value);
+    }),
+    retryWhen((errors) => {
+
+      return errors.pipe(
+        tap(() => console.log('Retrying the source 
+                              Observable...'))
+      );
+    })
+  )
+  .subscribe({
+    next: (res) => console.log('Value Emitted', res),
+    error: (err) => console.log('Error Occurred', err),
+    complete: () => console.log('Stream Completed'),
+  });
+//Code runs infinitely
+
+
+
+----------------------------------------------------------------
+The delayWhen operator
+----------------------------------------------------------------
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Recipe } from '../model/recipe.model';
+import { catchError, delayWhen, of, retryWhen, tap, timer } from 'rxjs'; 
+@Injectable({
+  providedIn: 'root'
+})
+export class RecipesService {
+recipes$ = this.http.get<Recipe[]>('http://localhost:3001/recipes').pipe(
+    retryWhen(errors => {
+      return errors
+        .pipe(
+          delayWhen(() => timer(5000)),
+          tap(() => console.log('Retrying the HTTP 
+                                request...'))
+        );
+    }),
+  );
+ constructor(private http: HttpClient) { }
+}
+
+
+catchError
+throwError
+delayWhen
+retry
+retryWhen

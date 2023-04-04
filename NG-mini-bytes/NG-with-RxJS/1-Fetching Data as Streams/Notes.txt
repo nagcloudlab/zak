@@ -1,0 +1,66 @@
+
+Fetching data as stream
+-------------------------------------------------
+1.
+-------------------------------------------------
+
+export class RecipesListComponent implements OnInit, OnDestroy {
+    recipes!: Recipe[];
+    subscription: Subscription;
+    constructor(private service: RecipesService) { }
+
+    ngOnInit(): void {
+        this.subscription = this.service.getRecipes()
+            .subscribe(result => {
+                this.recipes = result;
+            });
+    }
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+}
+
+
+-------------------------------------------------
+2.
+-------------------------------------------------
+
+  recipes!: Recipe[];
+  destroy$ = new Subject<void>();
+  constructor(private service: RecipesService) { }
+ 
+  ngOnInit(): void {
+    this.service.getRecipes().pipe(
+    takeUntil(this.destroy$)).
+    subscribe(result => {
+      this.recipes = result;
+    });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+-------------------------------------------------
+3.
+-------------------------------------------------
+
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { RecipesService } from '../core/services/recipes.service';
+@Component({
+  selector: 'app-recipes-list',
+  templateUrl: './recipes-list.component.html',
+  styleUrls: ['./recipes-list.component.css']
+})
+export class RecipesListComponent implements OnInit {
+ recipes$= this.service.recipes$;
+  constructor(private service: RecipesService) { }
+}
+
+<div *ngIf="recipes$ |async as recipes" class="card">
+    <p-dataView #dv [value]="recipes" [paginator]="true" 
+     [rows]="9"     filterBy="name" layout="grid">
+    /** Extra code here **/
+    </p-dataView>
+</div>

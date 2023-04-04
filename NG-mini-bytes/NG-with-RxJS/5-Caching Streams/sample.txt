@@ -1,0 +1,283 @@
+
+
+Explaining Multicasting versus Unicasting
+
+
+1. A cold observable
+
+import { Observable} from 'rxjs';
+const coldObservable$ = new Observable(observer => {
+  observer.next(Math.random());
+  observer.next(Math.random());
+  observer.complete();
+});
+ 
+/** First subscriber */
+coldObservable$.subscribe(data => {
+  console.log(`The first Observer : ${data}`);
+});
+ 
+/** Second subscriber */
+coldObservable$.subscribe(data => {
+  console.log(`The second Observer : ${data}`);
+});
+//console output 
+The first Observer: 0.043246216289945405
+The first Observer: 0.7836505017199451
+The second Observer: 0.18013755537578624
+The second Observer: 0.23196314531696882
+
+
+2. A hot observable
+
+import { Observable, fromEvent } from 'rxjs';
+// Hot Observable
+const hotObservable$ = fromEvent(document, 'click');
+
+hotObservable$.subscribe(({ x, y }: MouseEvent) => {
+  console.log(`The first subscriber: [${x}, ${y}]`);
+});
+ 
+hotObservable$.subscribe(({ x, y }: MouseEvent)=> {
+  console.log(`The second subscriber: [${x}, ${y}]`);
+});
+
+//console output 
+The first subscriber: [108, 104]
+The second subscriber: [108, 104]
+
+
+----------------------------------------------------------------
+
+const value = Math.random();
+const coldObservable$ = new Observable(observer => {
+  observer.next(value);
+  observer.next(value);
+  observer.complete();
+});
+ 
+/** first subscriber */
+coldObservable$.subscribe(data => {
+  console.log(`The first subscriber: ${data}`);
+});
+ 
+/** second subscriber */
+coldObservable$.subscribe(data => {
+  console.log(`The second subscriber: ${data}`);
+});
+//console output
+The first subscriber: 0.6642828154026537
+The first subscriber: 0.6642828154026537
+The second subscriber: 0.6642828154026537
+The second subscriber: 0.6642828154026537
+
+----------------------------------------------------------------
+
+
+Exploring Subjects
+
+
+A. Plain Subjects
+
+const plainSubject$ = new Subject();
+plainSubject$.next(10);
+plainSubject$.next(20);
+plainSubject$.subscribe({
+    next: (message) => console.log(message),
+    error: (error) => console.log(error),
+    complete: () => console.log('Stream Completed'),
+  });
+plainSubject$.subscribe({
+    next: (message) => console.log(message),
+    error: (error) => console.log(error),
+    complete: () => console.log('Stream Completed'),
+  });
+plainSubject$.next(30);
+//console output
+30
+30
+
+2. ReplaySubject
+
+const replaySubject$ = new ReplaySubject();
+replaySubject$.next(10);
+replaySubject$.next(20);
+replaySubject$.next(50);
+replaySubject$.subscribe({
+  next: (message) => console.log(message),
+  error: (error) => console.log(error),
+  complete: () => console.log('Stream Completed'),
+});
+replaySubject$.subscribe({
+  next: (message) => console.log(message),
+  error: (error) => console.log(error),
+  complete: () => console.log('Stream Completed'),
+});
+replaySubject$.next(30);
+//console output
+10
+20
+50
+10
+20
+50
+30
+30
+
+3. BehaviorSubject
+
+const behaviourSubject$ = new BehaviorSubject(1);
+behaviourSubject$.next(10);
+behaviourSubject$.next(20);
+behaviourSubject$.next(50);
+behaviourSubject$.subscribe({
+  next: (message) => console.log(message),
+  error: (error) => console.log(error),
+  complete: () => console.log('Stream Completed'),
+});
+behaviourSubject$.subscribe({
+  next: (message) => console.log(message),
+  error: (error) => console.log(error),
+  complete: () => console.log('Stream Completed'),
+});
+behaviourSubject$.next(30);
+//console output
+50
+50
+30
+30
+
+
+
+const behaviourSubject$ = new BehaviorSubject(1);
+behaviourSubject$.subscribe({
+  next: (message) => console.log(message),
+  error: (error) => console.log(error),
+  complete: () => console.log('Stream Completed'),
+});
+behaviourSubject$.subscribe({
+  next: (message) => console.log(message),
+  error: (error) => console.log(error),
+  complete: () => console.log('Stream Completed'),
+});
+behaviourSubject$.next(30);
+//console output
+1
+1
+30
+30
+
+
+Highlighting Multicasting operators
+
+- share
+
+
+----------------------------------------------------------------
+
+Learning about using the reactive pattern to cache streams
+
+//1. 
+export class RecipesService {
+recipes$ = this.http.get<Recipe[]>(`${BASE_PATH}/recipes`);
+}
+
+
+//2.
+ export class RecipesService {
+recipes$ = this.http.get<Recipe[]>(`${BASE_PATH}/recipes`).pipe(shareReplay(1));
+}
+
+
+//3.
+export class RecipesService {
+  recipes$ = this.getRecipesList();
+  getRecipesList(): Observable<Recipe[]> {
+    if (!this.recipes$) {
+      return this.http.get<Recipe[]>(
+       `${BASE_PATH}/recipes`).pipe(shareReplay(1));
+    }
+    return this.recipes$;
+  } 
+}
+
+
+// 4. 
+import { timer } from 'rxjs/observable/timer';
+import { switchMap, shareReplay } from 'rxjs/operators';
+const REFRESH_INTERVAL = 50000;
+const timer$ = timer(0, REFRESH_INTERVAL);
+export class RecipesService {
+  recipes$ = this.getRecipesList();
+  getRecipesList(): Observable<Recipe[]> {
+    if (!this.recipes$) {
+      return timer$.pipe(
+      switchMap(_ => 
+      this.http.get<Recipe[]>(`${BASE_PATH}/recipes`)),
+      shareReplay(1)
+    );
+    }
+    return this.recipes$;
+  } 
+}
+
+
+ shareReplay({bufferSize: 1, refCount: true })
+
+ ----------------------------------------------------------------
+
+ import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, ReplaySubject, timer } from 'rxjs';
+import { Recipe } from '../model/recipe.model';
+import { environment } from 'src/environments/environment';
+import { shareReplay, switchMap } from 'rxjs/operators';
+const BASE_PATH = environment.basePath
+const REFRESH_INTERVAL = 50000;
+const timer$ = timer(0, REFRESH_INTERVAL);
+@Injectable({
+  providedIn: 'root'
+})
+export class RecipesService {
+  recipes$ = this.getRecipesList();
+  private filterRecipeSubject = new 
+   BehaviorSubject<Recipe>({ title: '' });
+  filterRecipesAction$ = 
+   this.filterRecipeSubject.asObservable(); 
+  constructor(private http: HttpClient) { }
+  updateFilter(criteria: Recipe) {
+    this.filterRecipeSubject.next(criteria);
+  }
+  getRecipesList(): Observable<Recipe[]> {
+    if (!this.recipes$) {
+      return timer$.pipe(
+      switchMap(_ => 
+      this.http.get<Recipe[]>(`${BASE_PATH}/recipes`)),
+      shareReplay({bufferSize: 1, refCount: true })
+    );
+    }
+    return this.recipes$;
+  } 
+  saveRecipe(formValue: Recipe): Observable<Recipe> {
+    return this.http.post<Recipe>(
+     `${BASE_PATH}/recipes/save`, formValue);
+  }
+}
+
+----------------------------------------------------------------
+
+
+Exploring the RxJS 7 recommended pattern to cache streams
+
+getRecipesList(): Observable<Recipe[]> {
+    if (!this.recipes$) {
+      return this.http.get<Recipe[]>(
+       `${BASE_PATH}/recipes`).pipe(share({
+        connector : () => new ReplaySubject(),
+        resetOnRefCountZero : true,
+        restOnComplete: true,
+        resetOnError: true
+      }));
+    }
+    return this.recipes$;
+  }
