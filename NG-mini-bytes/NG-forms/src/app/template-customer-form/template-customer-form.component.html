@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">Customer Form</div>
+            <div class="card-body">
+                <form #customerForm="ngForm" (submit)="handleSubmit(customerForm)">
+                    <div class="form-group">
+                        <label>FirstName</label>
+                        <input class="form-control" ngModel name="firstName" autofocus required minlength="3" />
+                        <div class="text-danger"
+                            *ngIf="customerForm.controls['firstName']?.invalid && customerForm.controls['firstName']?.touched">
+                            <span *ngIf="customerForm.controls['firstName']?.errors['required']">
+                                First Name is required.
+                            </span>
+                            <span *ngIf="customerForm.controls['firstName']?.errors['minlength']">
+                                First Name Min 3 chars required
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>LastName</label>
+                        <input class="form-control" ngModel name="lastName" />
+                    </div>
+                    <hr />
+                    <div ngModelGroup="address">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input class="form-control" ngModel name="city" />
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <select class="form-control" ngModel name="state">
+                                <option selected>Choose</option>
+                                <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Zip</label>
+                            <input class="form-control" ngModel name="zip" appZipValidator />
+                            <div class="text-danger"
+                                *ngIf="customerForm.controls['zip']?.invalid && customerForm.controls['zip']?.touched">
+                                <span *ngIf="customerForm.controls['zip']?.errors['zip']">
+                                    Invalid Zip code
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <br />
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <pre>
+            <hr/>
+            Form Data
+            <hr/>
+            {{customerForm.value|json}}
+            <hr/>
+            Form Group
+            <hr/>
+            is pristine : {{customerForm.pristine}}
+            is dirty : {{customerForm.dirty}}
+            is untouched : {{customerForm.untouched}}
+            is touched : {{customerForm.touched}}
+            is valid : {{customerForm.valid}}
+            is invalid : {{customerForm.invalid}}
+        </pre>
+        <!-- <pre>
+            <hr/>
+            Form Control ( e.g lastName)
+            <hr/>
+            is pristine : {{customerForm.controls['lastName'].pristine}}
+            is dirty : {{customerForm.controls['lastName'].dirty}}
+            is untouched : {{customerForm.controls['lastName'].untouched}}
+            is touched : {{customerForm.controls['lastName'].touched}}
+            is valid : {{customerForm.controls['lastName'].valid}}
+            is invalid : {{customerForm.controls['lastName'].invalid}}
+        </pre> -->
+    </div>
+</div>
