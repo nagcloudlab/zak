@@ -1,0 +1,11 @@
+<div class="card card-body">
+    <div class="d-flex justify-content-around">
+        <div class="display-3">{{value}}</div>
+        <div class="display-4">{{voteLine.up-voteLine.down}}</div>
+    </div>
+    <hr />
+    <div class="d-flex justify-content-around">
+        <button (click)="handleUpVote()" class="btn btn-primary">Up</button>
+        <button (click)="handleDownVote()" class="btn btn-primary">Down</button>
+    </div>
+</div>

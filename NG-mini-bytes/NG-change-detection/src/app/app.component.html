@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>NG change-detection</h1>
+  <hr />
+  <app-header></app-header>
+  <hr />
+  <app-cart-badge [cartStream]="cartStream"></app-cart-badge>
+  <hr />
+  <button (click)="handleBuy()">Buy</button>
+  <hr />
+  <app-foo [fooProp]="fooProp"></app-foo>
+
+  <hr />
+  <button (click)="handler1()">Async inside Zone - {{count1}}</button>
+  <button (click)="handler2()">Async outside Zone - {{count2}}</button>
+  <hr />
+
+  <button (click)="changeName()">Change Name</button>
+  <div class="alert alert-info">
+    {{name}}
+  </div>
+  <hr />
+  <div class="alert alert-danger">
+    {{timeNow}}
+  </div>
+  <hr />
+  <button class="btn btn-dark" (click)="loadTop5Todos()">Load top-5 todos</button>
+  <hr />
+
+  {{todos|json}}
+
+
+
+
+
+
+</div>

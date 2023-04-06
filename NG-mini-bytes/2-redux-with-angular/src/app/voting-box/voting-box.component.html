@@ -1,0 +1,11 @@
+<div class="card">
+    <div class="card-header">Voting Box</div>
+    <div class="card-body">
+        <div class="d-flex justify-content-around">
+            <app-voting-item value="Angular" (vote)="handleVote($event)"></app-voting-item>
+            <app-voting-item value="React" (vote)="handleVote($event)"></app-voting-item>
+        </div>
+        <hr />
+        <app-voting-table></app-voting-table>
+    </div>
+</div>

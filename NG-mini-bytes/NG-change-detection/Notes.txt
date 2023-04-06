@@ -1,0 +1,15 @@
+
+
+
+- Events
+- Timer
+- XHR,Fetch
+
+->Asynchronous operations,, brings change to UI
+->NG, do change detection on every async, to project new data to UI
+
+
+----------------------------------------------------------------
+
+
+
