@@ -13,7 +13,9 @@ export class UserService {
   usersApiUrl = 'https://api.randomuser.me?results=10&seed=packt';
   commentsJsonUrl = 'assets/data/comments.json';
   usersCache: IUser[] = [];
+
   worker: Worker = getUniqueIdWorker();
+
   constructor(private http: HttpClient) {
     if (this.worker === null) {
       return;

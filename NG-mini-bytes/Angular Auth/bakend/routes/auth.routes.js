@@ -1,40 +1,39 @@
-const express = require('express')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const router = express.Router()
-const authorize = require('../middlewares/auth')
-const { check, validationResult } = require('express-validator')
-
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const router = express.Router();
+const authorize = require("../middlewares/auth");
+const { check, validationResult } = require("express-validator");
 
 // Sign-in
-router.post('/signin', (req, res, next) => {
+router.post("/signin", (req, res, next) => {
+  //...
+
   let jwtToken = jwt.sign(
     {
-      email: req.body.email,
-      userId: /*getUser._id*/123,
+      email: req.body.email, // user claims
+      userId: /*getUser._id*/ 123,
     },
-    'longer-secret-is-better',
+    "longer-secret-is-better",
     {
-      expiresIn: '1h',
-    },
-  )
+      expiresIn: "1h",
+    }
+  );
   res.status(200).json({
     token: jwtToken,
     expiresIn: 3600,
-    _id: /*getUser._id*/123,
-  })
-
-})
-
+    _id: /*getUser._id*/ 123,
+  });
+});
 
 // Get Single User
-router.route('/user-profile/:id').get(authorize, (req, res, next) => {
+router.route("/user-profile/:id").get(authorize, (req, res, next) => {
   res.status(200).json({
     msg: {
-      name: "Foo",
-      email: "upchh@example.com",
+      name: "Nag",
+      email: "Nag@example.com",
     },
-  })
-})
+  });
+});
 
-module.exports = router
+module.exports = router;

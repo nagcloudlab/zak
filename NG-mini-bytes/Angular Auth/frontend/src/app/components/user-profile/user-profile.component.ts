@@ -10,7 +10,6 @@ import { AuthService } from './../../shared/auth.service';
 
 export class UserProfileComponent implements OnInit {
   currentUser: any = {};
-
   constructor(
     public authService: AuthService,
     private actRoute: ActivatedRoute
@@ -18,8 +17,9 @@ export class UserProfileComponent implements OnInit {
     let id = this.actRoute.snapshot.paramMap.get('id');
     this.authService.getUserProfile(id).subscribe((res) => {
       this.currentUser = res.msg;
+      console.log(this.currentUser);
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

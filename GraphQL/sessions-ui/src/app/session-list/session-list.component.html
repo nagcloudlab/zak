@@ -1,0 +1,11 @@
+<ul>
+    <li *ngFor="let session of sessions">
+        <h1>
+            {{session.title}}
+        </h1>
+        <div *ngFor="let speaker of session.speakers">
+            <h2>{{speaker.name}}</h2>
+        </div>
+        <hr />
+    </li>
+</ul>
